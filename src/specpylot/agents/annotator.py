@@ -15,6 +15,9 @@ class AnnotatorResult:
     raw_text: str
     raw_attempts: list[str]
     attempts: int
+    prompt_tokens: int
+    completion_tokens: int
+    total_tokens: int
 
 
 class AnnotatorAgent:
@@ -58,12 +61,18 @@ class AnnotatorAgent:
         last_raw: str = ""
         last_err: Optional[Exception] = None
         raw_attempts: list[str] = []
+        prompt_tokens = 0
+        completion_tokens = 0
+        total_tokens = 0
 
         total_attempts = 1 + self._max_retries
         for attempt in range(1, total_attempts + 1):
-            raw = self._invoke_text(cur_messages)
+            raw, usage = self._invoke_text(cur_messages)
             last_raw = raw
             raw_attempts.append(raw)
+            prompt_tokens += usage.get("prompt_tokens", 0)
+            completion_tokens += usage.get("completion_tokens", 0)
+            total_tokens += usage.get("total_tokens", 0)
 
             try:
                 # Lazy import so this module doesn't hard-depend on your parser at import time.
@@ -77,6 +86,9 @@ class AnnotatorAgent:
                     raw_text=raw,
                     raw_attempts=raw_attempts,
                     attempts=attempt,
+                    prompt_tokens=prompt_tokens,
+                    completion_tokens=completion_tokens,
+                    total_tokens=total_tokens,
                 )
             except Exception as e:  # noqa: BLE001
                 last_err = e
@@ -96,7 +108,7 @@ class AnnotatorAgent:
             f"Last response snippet: {self._snippet(last_raw)}"
         )
 
-    def _invoke_text(self, messages: Sequence[BaseMessage]) -> str:
+    def _invoke_text(self, messages: Sequence[BaseMessage]) -> tuple[str, dict]:
         """Invoke the model and normalize to a stripped content string."""
         try:
             resp = self._llm.invoke(list(messages))
@@ -114,9 +126,10 @@ class AnnotatorAgent:
                     f"provider. Model: {model}. Original error: {msg}"
                 ) from exc
             raise
+        usage = self._extract_usage(resp)
         if isinstance(resp, AIMessage):
-            return (resp.content or "").strip()
-        return (getattr(resp, "content", "") or "").strip()
+            return (resp.content or "").strip(), usage
+        return (getattr(resp, "content", "") or "").strip(), usage
 
     def _with_format_fix_message(
         self,
@@ -161,3 +174,65 @@ class AnnotatorAgent:
         if len(text) <= head + tail + 10:
             return repr(text)
         return repr(text[:head] + "\n...\n" + text[-tail:])
+
+    @staticmethod
+    def _extract_usage(resp: object) -> dict:
+        usage_meta = {}
+        if hasattr(resp, "usage_metadata") and isinstance(
+            getattr(resp, "usage_metadata"), dict
+        ):
+            usage_meta = dict(getattr(resp, "usage_metadata"))
+
+        response_meta = {}
+        if hasattr(resp, "response_metadata") and isinstance(
+            getattr(resp, "response_metadata"), dict
+        ):
+            response_meta = dict(getattr(resp, "response_metadata"))
+
+        token_usage = {}
+        if isinstance(response_meta.get("token_usage"), dict):
+            token_usage = dict(response_meta.get("token_usage"))
+
+        provider_usage = {}
+        if isinstance(response_meta.get("usage"), dict):
+            provider_usage = dict(response_meta.get("usage"))
+
+        # LangChain standard usage_metadata uses input/output/total tokens.
+        prompt = usage_meta.get("input_tokens")
+        completion = usage_meta.get("output_tokens")
+        total = usage_meta.get("total_tokens")
+
+        # OpenAI-style response_metadata.token_usage uses prompt/completion/total tokens.
+        if prompt is None:
+            prompt = token_usage.get("prompt_tokens")
+        if completion is None:
+            completion = token_usage.get("completion_tokens")
+        if total is None:
+            total = token_usage.get("total_tokens")
+
+        # Anthropic-style response_metadata.usage uses input/output tokens.
+        if prompt is None:
+            prompt = provider_usage.get("input_tokens")
+        if completion is None:
+            completion = provider_usage.get("output_tokens")
+        if prompt is None:
+            prompt = provider_usage.get("prompt_tokens")
+        if completion is None:
+            completion = provider_usage.get("completion_tokens")
+        if total is None:
+            total = provider_usage.get("total_tokens")
+
+        # Ollama-style response_metadata may include eval counts.
+        if prompt is None and isinstance(response_meta.get("prompt_eval_count"), int):
+            prompt = response_meta.get("prompt_eval_count")
+        if completion is None and isinstance(response_meta.get("eval_count"), int):
+            completion = response_meta.get("eval_count")
+
+        if total is None and prompt is not None and completion is not None:
+            total = int(prompt) + int(completion)
+
+        return {
+            "prompt_tokens": int(prompt or 0),
+            "completion_tokens": int(completion or 0),
+            "total_tokens": int(total or 0),
+        }

@@ -149,13 +149,33 @@ def main(argv: list[str] | None = None) -> int:
         temperature=args.temperature,
     )
     try:
-        pipeline.run()
+        run_result = pipeline.run()
+        out_dir = run_result.get("out_dir") if isinstance(run_result, dict) else None
+        if out_dir:
+            results_path = Path(out_dir) / "results.json"
+            if results_path.exists():
+                try:
+                    import json  # noqa: WPS433
+
+                    results = json.loads(results_path.read_text())
+                    token_usage = results.get("token_usage") or {}
+                    if token_usage:
+                        print(f"Token usage: {token_usage}")
+                except Exception:
+                    pass
     except ValueError as exc:
         msg = str(exc)
         print(f"ERROR: {msg}")
         if "LLM model not found" in msg:
             print("Hint: verify the --model value matches your provider.")
         return 2
+    except Exception as exc:  # noqa: BLE001
+        msg = str(exc)
+        print(f"ERROR: {msg}")
+        lower = msg.lower()
+        if "connection error" in lower or "connecterror" in lower:
+            print("Hint: network/DNS/proxy issue. Check base URL and proxy env vars.")
+        return 3
     return 0
 
 

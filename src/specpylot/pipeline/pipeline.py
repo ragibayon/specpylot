@@ -119,6 +119,11 @@ class SpecpylotPipeline:
             self._write_messages(log_run_dir / "messages_annotation.json", messages)
 
         result = self._annotate(ui, agent, messages)
+        token_usage = {
+            "prompt_tokens": result.prompt_tokens,
+            "completion_tokens": result.completion_tokens,
+            "total_tokens": result.total_tokens,
+        }
         annotated_relpath = self.target_path.name
 
         current_code = result.annotated_code
@@ -174,6 +179,9 @@ class SpecpylotPipeline:
                 refine_attempt=refine_attempts + 1,
             )
             refine_attempts += 1
+            token_usage["prompt_tokens"] += refined.prompt_tokens
+            token_usage["completion_tokens"] += refined.completion_tokens
+            token_usage["total_tokens"] += refined.total_tokens
             current_code = refined.annotated_code
             self._maybe_write_llm_attempts(
                 log_run_dir,
@@ -210,6 +218,7 @@ class SpecpylotPipeline:
                 "provider": self.cfg.provider,
                 "model": self.cfg.model,
                 "temperature": self.temperature,
+                "token_usage": token_usage,
             },
             log_run_dir=log_run_dir,
             ch_result=ch_result,
@@ -600,6 +609,7 @@ class SpecpylotPipeline:
             "provider": llm_info.get("provider"),
             "model": llm_info.get("model"),
             "temperature": llm_info.get("temperature"),
+            "token_usage": llm_info.get("token_usage", {}),
             "refine_attempts": refine_attempts,
             "final_status": cls.get("status"),
             "last_counterexample": cls.get("counterexample") or "",

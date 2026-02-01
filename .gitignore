@@ -219,3 +219,5 @@ __marimo__/
 out/
 logs/
 results/
+lint.py
+.DS_STORE
