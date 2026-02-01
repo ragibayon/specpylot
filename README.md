@@ -35,7 +35,7 @@ pip install -e .
 ### Clone, install, run (local)
 
 ```bash
-git clone https://github.com/your-org/specpylot.git
+git clone https://github.com/ragibayon/specpylot.git
 cd specpylot
 uv add .
 ```
@@ -49,7 +49,7 @@ specpylot --target examples/divide.py
 ### Docker from GitHub (example)
 
 ```bash
-git clone https://github.com/your-org/specpylot.git
+git clone https://github.com/ragibayon/specpylot.git
 cd specpylot
 docker build -t specpylot .
 docker run --rm -e OPENAI_API_KEY=... specpylot --target examples/divide.py
@@ -212,4 +212,4 @@ docker build -t specpylot .
 docker run --rm -e OPENAI_API_KEY=... specpylot --target examples/divide.py
 ```
 
-The container includes `examples/divide.py` only.
+The container includes all files under `examples/`.
