@@ -2,6 +2,12 @@
 
 Specpylot annotates Python code with icontract contracts, validates them with CrossHair, and optionally refines the contracts. It can also generate pytest stubs via CrossHair cover when enabled.
 
+### Tool demo
+
+<a href="https://youtu.be/Kaz4Bvb93ro">
+  <img src="https://img.youtube.com/vi/Kaz4Bvb93ro/hqdefault.jpg" alt="Specpylot tool demo video" width="640">
+</a>
+
 ### Requirements
 
 - Python 3.12+
