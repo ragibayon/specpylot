@@ -1,0 +1,3 @@
+OPENAI_API_KEY=sk-your-openai-key
+ANTHROPIC_API_KEY=sk-your-anthropic-key
+OLLAMA_BASE_URL=http://localhost:11434

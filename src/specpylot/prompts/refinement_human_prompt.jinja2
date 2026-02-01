@@ -1,0 +1,34 @@
+CrossHair evidence (refutation bundle):
+STATUS: {{ crosshair_bundle.status }}
+REASON: {{ crosshair_bundle.reason }}
+
+LAST_ERROR_LINE:
+{{ crosshair_bundle.last_error_line }}
+
+COUNTEREXAMPLE (classifier):
+{{ crosshair_bundle.counterexample }}
+
+CALL_EXPR (if extracted):
+{{ crosshair_bundle.call_expr }}
+
+PATH_STATS_LAST:
+{{ crosshair_bundle.path_tree_stats_last }}
+
+ITERATIONS_LAST:
+{{ crosshair_bundle.iterations_last }}
+
+STDOUT_TAIL:
+{{ crosshair_bundle.stdout_tail }}
+
+STDERR_TAIL:
+{{ crosshair_bundle.stderr_tail }}
+
+Task:
+- Update only contracts/spec-related code (icontract decorators, invariants, helper predicates used by contracts).
+- Do not remove all postconditions or weaken everything; keep contracts meaningful.
+- If the counterexample indicates valid inputs, fix the postcondition/invariant.
+- If the counterexample violates intended domain restrictions, strengthen a precondition instead.
+- Return the full updated code in exactly one <annotated code>...</annotated code> block.
+
+Annotated code to refine:
+{{ annotated_code }}
