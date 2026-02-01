@@ -98,7 +98,22 @@ class AnnotatorAgent:
 
     def _invoke_text(self, messages: Sequence[BaseMessage]) -> str:
         """Invoke the model and normalize to a stripped content string."""
-        resp = self._llm.invoke(list(messages))
+        try:
+            resp = self._llm.invoke(list(messages))
+        except Exception as exc:  # noqa: BLE001
+            msg = str(exc)
+            lower = msg.lower()
+            if "not_found_error" in lower or "model:" in lower or "404" in lower:
+                model = (
+                    getattr(self._llm, "model_name", None)
+                    or getattr(self._llm, "model", None)
+                    or "<unknown>"
+                )
+                raise ValueError(
+                    "LLM model not found. Check the --model value for the selected "
+                    f"provider. Model: {model}. Original error: {msg}"
+                ) from exc
+            raise
         if isinstance(resp, AIMessage):
             return (resp.content or "").strip()
         return (getattr(resp, "content", "") or "").strip()

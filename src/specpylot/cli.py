@@ -148,7 +148,14 @@ def main(argv: list[str] | None = None) -> int:
         cfg=cfg,
         temperature=args.temperature,
     )
-    pipeline.run()
+    try:
+        pipeline.run()
+    except ValueError as exc:
+        msg = str(exc)
+        print(f"ERROR: {msg}")
+        if "LLM model not found" in msg:
+            print("Hint: verify the --model value matches your provider.")
+        return 2
     return 0
 
 
