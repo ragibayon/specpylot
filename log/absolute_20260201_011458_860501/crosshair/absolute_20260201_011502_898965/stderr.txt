@@ -1,0 +1,33 @@
+6183.180| |unwalled_main() CrossHair v0.0.102 on darwin, Python 3.12.8
+6183.180| |unwalled_main() Installed plugins: []
+6183.181|     |analyze_class() Analyzing class  Absolute
+6183.182|      |condition_parser() Using parsers:  [AnalysisKind.icontract]
+6183.237|      |analyze_function() Analyzing  absolute
+6183.238|     |analyze() Analyzing postcondition: " result >= 0 "
+6183.238|     |analyze() assuming preconditions:  
+6183.238|      |condition_parser() Using parsers:  [AnalysisKind.icontract]
+6183.238|      |analyze_calltree() Begin analyze calltree  absolute
+6183.239|      |analyze_calltree() Iteration  1
+6183.241|        |pre_path_hook() No coverage biasing in effect. ( 0  code locations)
+6183.242|          |proxy_for_class() Proxy as a concrete instance of Absolute
+6183.242|        |gen_args() created proxy for self as type: Absolute 0x109a65a60
+6183.242|        |gen_args() created proxy for num as type: SymbolicBoundedInt 0x109acdca0
+6183.243|       |attempt_call() Starting function body
+6183.257|            |choose_possible() SMT chose: Not(0 <= num_3) (chance: 0.75) at (<module> crosshair:10) (main main.py:989) (unwalled_main main.py:930) (check main.py:892) (run_checkables core.py:887) (analyze core.py:866) (analyze core.py:815) (analyze_calltree core.py:1224) (attempt_call core.py:1502) (__call__ condition_parser.py:90) (absolute absolute.py:7) (__bool__ builtinslib.py:1158) (__ch_realize__ builtinslib.py:1134) (choose_possible statespace.py:924)
+6183.257|       |attempt_call() Starting postcondition
+6183.259|          |choose_possible() SMT chose: 0 <= -num_3 (chance: 1.0) at (<module> crosshair:10) (main main.py:989) (unwalled_main main.py:930) (check main.py:892) (run_checkables core.py:887) (analyze core.py:866) (analyze core.py:815) (analyze_calltree core.py:1224) (attempt_call core.py:1564) (__bool__ builtinslib.py:1158) (__ch_realize__ builtinslib.py:1134) (choose_possible statespace.py:924)
+6183.259|       |attempt_call() Postcondition confirmed.
+6183.259|      |analyze_calltree() Path tree stats {CONFIRMED:1}
+6183.259|      |analyze_calltree() Iter complete. Worst status found so far: UNKNOWN
+6183.259|      |analyze_calltree() Iteration  2
+6183.259|        |pre_path_hook() No coverage biasing in effect. ( 1  code locations)
+6183.260|          |proxy_for_class() Proxy as a concrete instance of Absolute
+6183.260|        |gen_args() created proxy for self as type: Absolute 0x109ae44d0
+6183.260|        |gen_args() created proxy for num as type: SymbolicBoundedInt 0x109acf170
+6183.261|       |attempt_call() Starting function body
+6183.262|            |choose_possible() SMT chose: 0 <= num_3 (chance: 1.0) at (<module> crosshair:10) (main main.py:989) (unwalled_main main.py:930) (check main.py:892) (run_checkables core.py:887) (analyze core.py:866) (analyze core.py:815) (analyze_calltree core.py:1224) (attempt_call core.py:1502) (__call__ condition_parser.py:90) (absolute absolute.py:7) (__bool__ builtinslib.py:1158) (__ch_realize__ builtinslib.py:1134) (choose_possible statespace.py:924)
+6183.262|       |attempt_call() Starting postcondition
+6183.263|       |attempt_call() Postcondition confirmed.
+6183.263|      |analyze_calltree() Path tree stats {CONFIRMED:2}
+6183.263|      |analyze_calltree() Iter complete. Worst status found so far: CONFIRMED
+6183.263|      |analyze_calltree() Exhausted calltree search with CONFIRMED and 0 messages. Number of iterations:  1

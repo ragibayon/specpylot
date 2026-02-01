@@ -216,8 +216,6 @@ __marimo__/
 .streamlit/secrets.toml
 
 # Specpylot outputs
-out/
-logs/
 results/
 lint.py
 .DS_STORE

@@ -1,0 +1,41 @@
+{
+  "coverage": {
+    "cover_targets": [
+      "absolute.py:6"
+    ],
+    "enabled": true,
+    "exit_code": 0,
+    "runtime_ms": 118,
+    "timeout": false
+  },
+  "crosshair": {
+    "exit_code": 0,
+    "iterations_last": 1,
+    "path_tree_stats_last": {
+      "CONFIRMED": 2
+    },
+    "reason": null,
+    "runtime_ms": 256,
+    "status": "PASSED",
+    "timeout": false
+  },
+  "final_status": "PASSED",
+  "last_counterexample": "",
+  "model": "gpt-4o",
+  "paths": {
+    "annotated_code": "out/absolute_20260201_011458_860501/absolute.py",
+    "cover_test": "out/absolute_20260201_011458_860501/test.py",
+    "log_dir": "log/absolute_20260201_011458_860501",
+    "results_json": "out/absolute_20260201_011458_860501/results.json"
+  },
+  "provider": "openai",
+  "refine_attempts": 0,
+  "run_id": "absolute_20260201_011458_860501",
+  "target": "/Users/ragibayon/Code/FSE-tools/specpylot/examples/absolute.py",
+  "temperature": 0.0,
+  "token_usage": {
+    "completion_tokens": 222,
+    "prompt_tokens": 3306,
+    "total_tokens": 3528
+  }
+}

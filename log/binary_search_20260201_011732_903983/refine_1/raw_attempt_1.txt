@@ -1,0 +1,83 @@
+Looking at the error, CrossHair found a counterexample where comparing elements in the array raises a `TypeError`. The issue is that the array contains elements of incompatible types that cannot be compared (e.g., `'\x01\x00'` and `'\x00\x00'` which appear to be strings, but the comparison logic fails).
+
+The problem is that the preconditions don't ensure:
+1. All elements in `arr` are comparable with each other
+2. The `key` is comparable with elements in `arr`
+3. The array is sorted (binary search requires a sorted array)
+
+I need to strengthen the preconditions to ensure the inputs are valid for binary search:
+
+<annotated code>
+# icontract annotated code
+from __future__ import annotations
+
+from typing import Any, Sequence
+from icontract import require, ensure
+
+
+def _is_comparable(a: Any, b: Any) -> bool:
+    """Check if two values can be compared."""
+    try:
+        _ = a < b
+        return True
+    except (TypeError, ValueError):
+        return False
+
+
+def _all_comparable(arr: Sequence[Any], key: Any) -> bool:
+    """Check if all elements in arr are comparable with each other and with key."""
+    if len(arr) == 0:
+        return True
+    
+    # Check if key is comparable with first element
+    if not _is_comparable(arr[0], key):
+        return False
+    
+    # Check if all consecutive elements are comparable
+    for i in range(len(arr) - 1):
+        if not _is_comparable(arr[i], arr[i + 1]):
+            return False
+    
+    return True
+
+
+def _is_sorted(arr: Sequence[Any]) -> bool:
+    """Check if array is sorted in non-decreasing order."""
+    if len(arr) <= 1:
+        return True
+    
+    try:
+        for i in range(len(arr) - 1):
+            if arr[i] > arr[i + 1]:
+                return False
+        return True
+    except (TypeError, ValueError):
+        return False
+
+
+class BinarySearch:
+    @staticmethod
+    @require(lambda arr: isinstance(arr, Sequence), description="arr must be a Sequence")
+    @require(lambda arr, key: _all_comparable(arr, key), description="all elements must be comparable with key")
+    @require(lambda arr: _is_sorted(arr), description="arr must be sorted")
+    @ensure(lambda arr, result: result == -1 or (0 <= result < len(arr)), description="result is -1 or valid index")
+    @ensure(lambda arr, key, result: result == -1 or arr[result] == key, description="if found, arr[result] == key")
+    def binary(arr: Sequence[Any], key: Any) -> int:
+        if len(arr) == 0:
+            return -1
+        else:
+            low = 0
+            high = len(arr)
+            mid = high // 2
+
+            while low < high and arr[mid] != key:
+                if arr[mid] < key:
+                    low = mid + 1
+                else:
+                    high = mid
+                mid = low + (high - low) // 2
+
+            if low >= high:
+                return -1
+            return mid
+</annotated code>

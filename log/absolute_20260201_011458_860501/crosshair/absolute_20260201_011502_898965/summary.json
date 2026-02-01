@@ -1,0 +1,30 @@
+{
+  "annotated_code_path": "log/absolute_20260201_011458_860501/crosshair/absolute_20260201_011502_898965/absolute_annotated_gpt-4o_20260201_011458_860501.py",
+  "command": [
+    "crosshair",
+    "check",
+    "--analysis_kind",
+    "icontract",
+    "--per_condition_timeout",
+    "60",
+    "--per_path_timeout",
+    "5",
+    "--max_uninteresting_iterations",
+    "100",
+    "-v",
+    "absolute.py"
+  ],
+  "exit_code": 0,
+  "iterations_last": 1,
+  "path_tree_stats_last": {
+    "CONFIRMED": 2
+  },
+  "run_dir": "log/absolute_20260201_011458_860501/crosshair/absolute_20260201_011502_898965",
+  "run_id": "absolute_20260201_011502_898965",
+  "runtime_ms": 256,
+  "stderr_path": "log/absolute_20260201_011458_860501/crosshair/absolute_20260201_011502_898965/stderr.txt",
+  "stdout_path": "log/absolute_20260201_011458_860501/crosshair/absolute_20260201_011502_898965/stdout.txt",
+  "summary_path": "log/absolute_20260201_011458_860501/crosshair/absolute_20260201_011502_898965/summary.json",
+  "timeout": false,
+  "verdict": "PASSED"
+}

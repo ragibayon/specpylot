@@ -1,0 +1,31 @@
+{
+  "annotated_code_path": "log/binary_search_20260201_011732_903983/crosshair/binary_search_20260201_011743_021869/binary_search_annotated_claude-sonnet-4-5_20260201_011732_903983.py",
+  "command": [
+    "crosshair",
+    "check",
+    "--analysis_kind",
+    "icontract",
+    "--per_condition_timeout",
+    "60",
+    "--per_path_timeout",
+    "5",
+    "--max_uninteresting_iterations",
+    "100",
+    "-v",
+    "binary_search.py"
+  ],
+  "exit_code": 1,
+  "iterations_last": 13,
+  "path_tree_stats_last": {
+    "REFUTED": 1,
+    "realize_object_inheap_7len": 8
+  },
+  "run_dir": "log/binary_search_20260201_011732_903983/crosshair/binary_search_20260201_011743_021869",
+  "run_id": "binary_search_20260201_011743_021869",
+  "runtime_ms": 2245,
+  "stderr_path": "log/binary_search_20260201_011732_903983/crosshair/binary_search_20260201_011743_021869/stderr.txt",
+  "stdout_path": "log/binary_search_20260201_011732_903983/crosshair/binary_search_20260201_011743_021869/stdout.txt",
+  "summary_path": "log/binary_search_20260201_011732_903983/crosshair/binary_search_20260201_011743_021869/summary.json",
+  "timeout": false,
+  "verdict": "FAILED"
+}

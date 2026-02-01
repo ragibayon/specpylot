@@ -1,0 +1,32 @@
+# --- CrossHair cover stderr: absolute.py:6 (def absolute) ---
+6183.385| |unwalled_main() CrossHair v0.0.102 on darwin, Python 3.12.8
+6183.385| |unwalled_main() Installed plugins: []
+6183.386|  |cover() Begin cover on absolute
+6183.388|    |explore_paths() Iteration  1
+6183.388|      |pre_path_hook() No coverage biasing in effect. ( 0  code locations)
+6183.388|     |condition_parser() Using parsers:  (AnalysisKind.PEP316, AnalysisKind.icontract, AnalysisKind.deal)
+6183.390|       |proxy_for_class() Proxy as a concrete instance of Absolute
+6183.390|     |gen_args() created proxy for self as type: Absolute 0x104b73a40
+6183.390|     |gen_args() created proxy for num as type: SymbolicBoundedInt 0x104b73620
+6183.392|         |choose_possible() SMT chose: Not(0 <= num_3) (chance: 0.75) at (<module> crosshair:10) (main main.py:989) (unwalled_main main.py:948) (cover main.py:790) (path_cover path_cover.py:130) (explore_paths core.py:1385) (run_path path_cover.py:74) (absolute absolute.py:7) (__bool__ builtinslib.py:1158) (__ch_realize__ builtinslib.py:1134) (choose_possible statespace.py:924)
+6183.393|      |detach_path() Detached from search tree
+6183.400|     |on_path_complete() Realized args: Absolute(), -1
+6183.400|     |on_path_complete() Realized return: 1
+6183.400|    |explore_paths() Verification status: CONFIRMED
+6183.401|    |explore_paths() Path tree stats {CONFIRMED:1}
+6183.401|    |explore_paths() iters_since_discovery 0
+6183.401|    |explore_paths() Iteration  2
+6183.401|      |pre_path_hook() No coverage biasing in effect. ( 1  code locations)
+6183.401|     |condition_parser() Using parsers:  (AnalysisKind.PEP316, AnalysisKind.icontract, AnalysisKind.deal)
+6183.402|       |proxy_for_class() Proxy as a concrete instance of Absolute
+6183.402|     |gen_args() created proxy for self as type: Absolute 0x10b6160f0
+6183.402|     |gen_args() created proxy for num as type: SymbolicBoundedInt 0x10b616420
+6183.403|         |choose_possible() SMT chose: 0 <= num_3 (chance: 1.0) at (<module> crosshair:10) (main main.py:989) (unwalled_main main.py:948) (cover main.py:790) (path_cover path_cover.py:130) (explore_paths core.py:1385) (run_path path_cover.py:74) (absolute absolute.py:7) (__bool__ builtinslib.py:1158) (__ch_realize__ builtinslib.py:1134) (choose_possible statespace.py:924)
+6183.404|      |detach_path() Detached from search tree
+6183.408|     |on_path_complete() Realized args: Absolute(), 0
+6183.408|     |on_path_complete() Realized return: 0
+6183.408|    |explore_paths() Verification status: CONFIRMED
+6183.408|    |explore_paths() Path tree stats {CONFIRMED:2}
+6183.409|    |explore_paths() Stopping due to path exhaustion
+6183.409|   |path_cover() Next best path covers these opcode offsets: {2, 4, 6, 10, 16, 18, 20}
+6183.409|   |path_cover() Next best path covers these opcode offsets: {2, 4, 6, 10, 12, 14}

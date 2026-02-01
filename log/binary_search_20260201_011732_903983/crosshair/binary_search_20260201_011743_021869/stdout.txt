@@ -1,0 +1,1 @@
+/private/var/folders/lz/cwvth8653cx7h1564c_n4qhr0000gn/T/tmpojh0n90c/binary_search.py:22: error: TypeError:  when calling binary((0, '\x01\x00'), '\x00\x00')

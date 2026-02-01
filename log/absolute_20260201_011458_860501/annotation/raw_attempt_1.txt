@@ -1,0 +1,12 @@
+<annotated code>
+from icontract import ensure
+
+class Absolute:
+    @ensure(lambda num, result: result >= 0, description="The result should be non-negative")
+    def absolute(self, num: int) -> int:
+        if 0 <= num:
+            return num
+        else:
+            return -num
+
+</annotated code>
