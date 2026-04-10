@@ -225,3 +225,22 @@ docker run --rm -e OPENAI_API_KEY=... specpylot --target examples/divide.py
 ```
 
 The container includes all files under `examples/`.
+
+## Associated publication
+
+For more details, please refer to the associated conference paper:
+
+```bibtex
+@inproceedings{ayon2026specpylot,
+  author    = {Ragib Shahariar Ayon and Shibbir Ahmed},
+  title     = {SpecPylot: Python Specification Generation using Large Language Models},
+  booktitle = {Proceedings of the 34th ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering (FSE Companion '26)},
+  year      = {2026},
+  location  = {Montreal, QC, Canada},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  pages     = {1--5},
+  doi       = {10.1145/3803437.3806427},
+  url       = {https://doi.org/10.1145/3803437.3806427}
+}
+```
