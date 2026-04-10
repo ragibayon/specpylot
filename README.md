@@ -1,4 +1,4 @@
-## Specpylot
+## Specpylot: Python Specification Generation using Large Language Models
 
 Specpylot annotates Python code with icontract contracts, validates them with CrossHair, and optionally refines the contracts. It can also generate pytest stubs via CrossHair cover when enabled.
 
