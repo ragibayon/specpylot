@@ -3,8 +3,7 @@
 Specpylot annotates Python code with icontract contracts, validates them with CrossHair, and optionally refines the contracts. It can also generate pytest stubs via CrossHair cover when enabled.
 
 ### DOI
-This artifact is also published in Zenodo: DOI
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8271853.svg)]([https://doi.org/10.5281/zenodo.8271853](https://doi.org/10.5281/zenodo.19491112))
+This artifact is also published in Zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8271853.svg)]([https://doi.org/10.5281/zenodo.8271853](https://doi.org/10.5281/zenodo.19491112))
 
 
 
